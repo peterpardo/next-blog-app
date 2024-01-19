@@ -1,3 +1,9 @@
+import BlogCard from "@/components/BlogCard";
+
 export default function BlogList() {
-  return <div>Blog List</div>;
+  return (
+    <div className="py-5">
+      <BlogCard />
+    </div>
+  );
 }
