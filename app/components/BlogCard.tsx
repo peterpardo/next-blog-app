@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function BlogCard() {
   return (
-    <div className="w-96 h-[400px] rounded-lg shadow-lg">
+    <div className="max-w-96 max-h-[400px] mx-auto rounded-lg shadow-lg">
       <Image
         src="/cat_img.jpg"
         alt="cat image"
