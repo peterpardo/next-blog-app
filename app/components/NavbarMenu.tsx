@@ -3,11 +3,13 @@
 import { useClerk, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function NavbarMenu() {
   const clerk = useClerk();
   const { isSignedIn, user, isLoaded } = useUser();
+  const router = useRouter();
   const [isClicked, setisClicked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +48,7 @@ export default function NavbarMenu() {
             Create Post
           </Link>
 
-          <div ref={menuRef} className="relative">
+          <div ref={menuRef} className="relative cursor-pointer">
             <Image
               src={user.imageUrl}
               alt="profile image"
@@ -61,7 +63,10 @@ export default function NavbarMenu() {
                 <div className="text-sm px-3 cursor-pointer py-1 hover:bg-gray-100">
                   Settings
                 </div>
-                <div className="text-sm px-3 cursor-pointer py-1 hover:bg-gray-100">
+                <div
+                  onClick={() => clerk.signOut(() => router.push("/"))}
+                  className="text-sm px-3 cursor-pointer py-1 hover:bg-gray-100"
+                >
                   Sign Out
                 </div>
               </div>
