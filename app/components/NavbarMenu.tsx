@@ -45,7 +45,7 @@ export default function NavbarMenu() {
           </Link>
 
           <Link
-            href="/"
+            href="/create-post"
             className="text-xs bg-green-600 rounded-lg px-3 py-2 text-white hover:bg-green-500 md:text-base md:px-4"
           >
             Create Post
