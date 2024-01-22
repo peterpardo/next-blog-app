@@ -39,6 +39,13 @@ export default function NavbarMenu() {
             My Posts
           </Link>
 
+          <Link
+            href="/"
+            className="bg-green-600 rounded-lg px-4 py-2 text-white hover:bg-green-500"
+          >
+            Create Post
+          </Link>
+
           <div ref={menuRef} className="relative">
             <Image
               src={user.imageUrl}
