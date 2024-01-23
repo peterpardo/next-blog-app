@@ -1,6 +1,6 @@
 "use client";
 
-import TextField from "@/components/TextField";
+import TextField from "@/components/InputField";
 import TextareaField from "@/components/TextareaField";
 import React, { useState } from "react";
 

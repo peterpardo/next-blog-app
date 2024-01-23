@@ -2,16 +2,24 @@
 
 import React, { useEffect, useRef } from "react";
 
-export type TextField = {
+export type InputField = {
   label: string;
   name: string;
   id: string;
+  type?: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const TextField = ({ label, value, id, onChange, ...rest }: TextField) => {
+const InputField = ({
+  label,
+  value,
+  id,
+  type = "text",
+  onChange,
+  ...rest
+}: InputField) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -29,6 +37,7 @@ const TextField = ({ label, value, id, onChange, ...rest }: TextField) => {
         ref={inputRef}
         className="rounded border w-full"
         id={id}
+        type={type}
         onChange={onChange}
         {...rest}
       />
@@ -36,4 +45,4 @@ const TextField = ({ label, value, id, onChange, ...rest }: TextField) => {
   );
 };
 
-export default TextField;
+export default InputField;
