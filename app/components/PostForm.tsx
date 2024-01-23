@@ -2,6 +2,7 @@
 
 import TextField from "@/components/InputField";
 import TextareaField from "@/components/TextareaField";
+import Image from "next/image";
 import React, { useState } from "react";
 
 type PostData = {
@@ -16,9 +17,22 @@ const PostForm = () => {
     description: "",
     image: null,
   });
+  const [previewImage, setPreviewImage] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+
+    if (e.target.name === "image" && e.target.files) {
+      if (
+        e.target.files.length <= 0 ||
+        !allowedTypes.includes(e.target.files[0].type)
+      )
+        return;
+
+      const url = URL.createObjectURL(e.target.files[0]);
+      setPreviewImage(url);
+    }
 
     setPostData((prevState) => ({
       ...prevState,
@@ -69,8 +83,21 @@ const PostForm = () => {
         id="image"
         label="Image"
         type="file"
+        accept="image/*"
         onChange={handleInputChange}
       />
+
+      {previewImage && (
+        <div className="w-full">
+          <Image
+            src={previewImage}
+            alt="preview image"
+            width={500}
+            height={500}
+            className="mx-auto"
+          />
+        </div>
+      )}
     </div>
   );
 };

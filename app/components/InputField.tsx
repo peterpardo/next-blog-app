@@ -9,6 +9,7 @@ export type InputField = {
   type?: string;
   placeholder?: string;
   value?: string;
+  accept?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -17,6 +18,7 @@ const InputField = ({
   value,
   id,
   type = "text",
+  accept,
   onChange,
   ...rest
 }: InputField) => {
@@ -38,6 +40,7 @@ const InputField = ({
         className="rounded border w-full"
         id={id}
         type={type}
+        accept={accept}
         onChange={onChange}
         {...rest}
       />
