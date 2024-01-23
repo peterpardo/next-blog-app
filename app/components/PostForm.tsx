@@ -1,6 +1,7 @@
 "use client";
 
 import TextField from "@/components/TextField";
+import TextareaField from "@/components/TextareaField";
 import React, { useState } from "react";
 
 const PostForm = () => {
@@ -48,6 +49,12 @@ const PostForm = () => {
         placeholder="Your post description here..."
         value={postData.description}
         onChange={handleInputChange}
+      />
+      <TextareaField
+        name="content"
+        id="content"
+        label="Content"
+        placeholder="Your post content here..."
       />
     </div>
   );
