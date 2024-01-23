@@ -4,14 +4,22 @@ import TextField from "@/components/InputField";
 import TextareaField from "@/components/TextareaField";
 import React, { useState } from "react";
 
+type PostData = {
+  title: string;
+  description: string;
+  image: File | null;
+};
+
 const PostForm = () => {
-  const [postData, setPostData] = useState({
+  const [postData, setPostData] = useState<PostData>({
     title: "",
     description: "",
+    image: null,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+
     setPostData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -55,6 +63,13 @@ const PostForm = () => {
         id="content"
         label="Content"
         placeholder="Your post content here..."
+      />
+      <TextField
+        name="image"
+        id="image"
+        label="Image"
+        type="file"
+        onChange={handleInputChange}
       />
     </div>
   );
