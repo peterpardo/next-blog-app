@@ -1,6 +1,7 @@
 "use client";
 
-import TextField from "@/components/InputField";
+import CheckboxField from "@/components/CheckboxField";
+import InputField from "@/components/InputField";
 import TextareaField from "@/components/TextareaField";
 import { createPost } from "app/actions";
 import { useDisableScrollbar } from "app/hooks/useDisableScrollbar";
@@ -10,6 +11,7 @@ import React, { useState } from "react";
 type PostData = {
   title: string;
   description: string;
+  publish: boolean;
   image: File | null;
 };
 
@@ -17,13 +19,14 @@ const PostForm = () => {
   const [postData, setPostData] = useState<PostData>({
     title: "",
     description: "",
+    publish: false,
     image: null,
   });
   const [previewImage, setPreviewImage] = useState("");
+  const [isPublished, setIsPublished] = useState(false);
   // const { setIsDisabled } = useDisableScrollbar();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
 
     if (e.target.name === "image" && e.target.files) {
@@ -39,7 +42,8 @@ const PostForm = () => {
 
     setPostData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.type === "checkbox" ? e.target.checked : e.target.value,
     }));
   };
 
@@ -53,8 +57,8 @@ const PostForm = () => {
         </p>
       </div>
 
-      <form action={createPost}>
-        <TextField
+      <form action={createPost} className="space-y-5">
+        <InputField
           name="title"
           id="title"
           label="Title"
@@ -62,7 +66,7 @@ const PostForm = () => {
           value={postData.title}
           onChange={handleInputChange}
         />
-        <TextField
+        <InputField
           name="description"
           id="description"
           label="Description"
@@ -76,7 +80,7 @@ const PostForm = () => {
           label="Content"
           placeholder="Your post content here..."
         />
-        <TextField
+        <InputField
           name="image"
           id="image"
           label="Image"
@@ -96,6 +100,16 @@ const PostForm = () => {
             />
           </div>
         )}
+
+        <div className="flex items-center justify-end">
+          <CheckboxField
+            id="publish"
+            name="publish"
+            label="Publish"
+            checked={postData.publish}
+            onChange={handleInputChange}
+          />
+        </div>
 
         <div className="flex items-center justify-end">
           <button
