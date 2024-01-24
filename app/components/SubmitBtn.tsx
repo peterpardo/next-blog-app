@@ -15,7 +15,7 @@ const SubmitBtn = ({ label }: { label: string }) => {
       aria-disabled={pending}
       disabled={pending}
     >
-      {label}
+      {pending ? "Loading..." : label}
     </button>
   );
 };
