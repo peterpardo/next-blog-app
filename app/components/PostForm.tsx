@@ -2,6 +2,7 @@
 
 import TextField from "@/components/InputField";
 import TextareaField from "@/components/TextareaField";
+import { createPost } from "app/actions";
 import { useDisableScrollbar } from "app/hooks/useDisableScrollbar";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -19,12 +20,7 @@ const PostForm = () => {
     image: null,
   });
   const [previewImage, setPreviewImage] = useState("");
-  const { setIsDisabled } = useDisableScrollbar();
-
-  const handleCreatePost = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsDisabled((prevState) => !prevState);
-  };
+  // const { setIsDisabled } = useDisableScrollbar();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -57,57 +53,59 @@ const PostForm = () => {
         </p>
       </div>
 
-      <TextField
-        name="title"
-        id="title"
-        label="Title"
-        placeholder="Your post title here..."
-        value={postData.title}
-        onChange={handleInputChange}
-      />
-      <TextField
-        name="description"
-        id="description"
-        label="Description"
-        placeholder="Your post description here..."
-        value={postData.description}
-        onChange={handleInputChange}
-      />
-      <TextareaField
-        name="content"
-        id="content"
-        label="Content"
-        placeholder="Your post content here..."
-      />
-      <TextField
-        name="image"
-        id="image"
-        label="Image"
-        type="file"
-        accept="image/*"
-        onChange={handleInputChange}
-      />
+      <form action={createPost}>
+        <TextField
+          name="title"
+          id="title"
+          label="Title"
+          placeholder="Your post title here..."
+          value={postData.title}
+          onChange={handleInputChange}
+        />
+        <TextField
+          name="description"
+          id="description"
+          label="Description"
+          placeholder="Your post description here..."
+          value={postData.description}
+          onChange={handleInputChange}
+        />
+        <TextareaField
+          name="content"
+          id="content"
+          label="Content"
+          placeholder="Your post content here..."
+        />
+        <TextField
+          name="image"
+          id="image"
+          label="Image"
+          type="file"
+          accept="image/*"
+          onChange={handleInputChange}
+        />
 
-      {previewImage && (
-        <div className="w-full">
-          <Image
-            src={previewImage}
-            alt="preview image"
-            width={500}
-            height={500}
-            className="mx-auto"
-          />
+        {previewImage && (
+          <div className="w-full">
+            <Image
+              src={previewImage}
+              alt="preview image"
+              width={500}
+              height={500}
+              className="mx-auto"
+            />
+          </div>
+        )}
+
+        <div className="flex items-center justify-end">
+          <button
+            type="submit"
+            className="bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-500"
+          >
+            Create Post
+          </button>
         </div>
-      )}
-
-      <div className="flex items-center justify-end">
-        <button
-          className="bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-500"
-          onClick={handleCreatePost}
-        >
-          Create Post
-        </button>
-      </div>
+      </form>
     </div>
   );
 };
