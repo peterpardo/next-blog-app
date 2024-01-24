@@ -1,5 +1,5 @@
 import BlogCard from "@/components/BlogCard";
-import { prisma } from "@/utils/prismaClient";
+import prisma from "@/utils/db";
 
 export default async function BlogList() {
   const posts = await prisma.post.findMany();

@@ -2,6 +2,7 @@
 
 import { auth } from "@clerk/nextjs";
 import { PrismaClient } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 const prisma = new PrismaClient();
 
@@ -26,5 +27,8 @@ export async function createPost(formData: FormData) {
     console.log("post created", post);
   } catch (e) {
     console.log("Error:", e);
+    return;
   }
+
+  redirect("/");
 }
