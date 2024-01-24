@@ -2,6 +2,7 @@
 
 import TextField from "@/components/InputField";
 import TextareaField from "@/components/TextareaField";
+import { useDisableScrollbar } from "app/hooks/useDisableScrollbar";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -18,6 +19,12 @@ const PostForm = () => {
     image: null,
   });
   const [previewImage, setPreviewImage] = useState("");
+  const { setIsDisabled } = useDisableScrollbar();
+
+  const handleCreatePost = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsDisabled((prevState) => !prevState);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -42,12 +49,6 @@ const PostForm = () => {
 
   return (
     <div className="space-y-5">
-      {/* Title */}
-      {/* description */}
-      {/* content */}
-      {/* image file - just one file */}
-      {/* submit button */}
-      {/* Confirmation modal */}
       <div>
         <h1 className="text-2xl">Create Post</h1>
         <p className="text-gray-500">
@@ -98,6 +99,15 @@ const PostForm = () => {
           />
         </div>
       )}
+
+      <div className="flex items-center justify-end">
+        <button
+          className="bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-500"
+          onClick={handleCreatePost}
+        >
+          Create Post
+        </button>
+      </div>
     </div>
   );
 };
