@@ -19,7 +19,8 @@ export async function createPost(formData: FormData) {
         description: formData.get("description") as string,
         content: formData.get("content") as string,
         authorId: userId,
-        published: false, // add input field for this
+        published: false,
+        image: "sample image",
       },
     });
     console.log("post created", post);

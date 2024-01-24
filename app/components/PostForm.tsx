@@ -23,7 +23,6 @@ const PostForm = () => {
     image: null,
   });
   const [previewImage, setPreviewImage] = useState("");
-  const [isPublished, setIsPublished] = useState(false);
   // const { setIsDisabled } = useDisableScrollbar();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
