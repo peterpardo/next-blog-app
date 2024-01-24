@@ -2,9 +2,9 @@
 
 import CheckboxField from "@/components/CheckboxField";
 import InputField from "@/components/InputField";
+import SubmitBtn from "@/components/SubmitBtn";
 import TextareaField from "@/components/TextareaField";
 import { createPost } from "app/actions";
-import { useDisableScrollbar } from "app/hooks/useDisableScrollbar";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -23,7 +23,6 @@ const PostForm = () => {
     image: null,
   });
   const [previewImage, setPreviewImage] = useState("");
-  // const { setIsDisabled } = useDisableScrollbar();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
@@ -111,12 +110,7 @@ const PostForm = () => {
         </div>
 
         <div className="flex items-center justify-end">
-          <button
-            type="submit"
-            className="bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-500"
-          >
-            Create Post
-          </button>
+          <SubmitBtn label="Create Post" />
         </div>
       </form>
     </div>
