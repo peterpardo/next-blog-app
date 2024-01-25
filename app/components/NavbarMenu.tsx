@@ -38,17 +38,10 @@ export default function NavbarMenu() {
       {isSignedIn ? (
         <div className="flex items-center gap-x-2 md:gap-x-5">
           <Link
-            href="/"
+            href="/my-posts"
             className="text-xs hover:border-b-2 border-green-600 md:text-base"
           >
             My Posts
-          </Link>
-
-          <Link
-            href="/create-post"
-            className="text-xs bg-green-600 rounded-lg px-3 py-2 text-white hover:bg-green-500 md:text-base md:px-4"
-          >
-            Create Post
           </Link>
 
           <div ref={menuRef} className="relative cursor-pointer">
