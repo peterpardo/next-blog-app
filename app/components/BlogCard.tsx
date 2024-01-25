@@ -8,7 +8,7 @@ export default function BlogCard({ post }: { post: Post }) {
   const { data } = supabase.storage
     .from("next-blog-storage")
     .getPublicUrl(post.image);
-    
+
   const formattedDate = dayjs(post.createdAt).format("MMM D, YYYY");
   const formattedTitle =
     post.title.length > 73 ? `${post.title.slice(0, 73)}...` : post.title;
@@ -26,13 +26,15 @@ export default function BlogCard({ post }: { post: Post }) {
 
   return (
     <div className="max-w-96 max-h-[400px] mx-auto rounded-lg shadow-lg">
-      <Image
-        src={data.publicUrl}
-        alt={post.title}
-        width={500}
-        height={500}
-        className="rounded-t-lg"
-      />
+      <Link href="/">
+        <Image
+          src={data.publicUrl}
+          alt={post.title}
+          width={500}
+          height={500}
+          className="rounded-t-lg"
+        />
+      </Link>
       <div className="p-4">
         <h1 className="font-bold text-lg">{formattedTitle}</h1>
         <p className="text-sm text-gray-500">
