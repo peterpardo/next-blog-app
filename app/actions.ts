@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
 import { supabase } from "@/utils/storage";
@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export async function createPost(_: any, formData: FormData) {
   try {
-    const { userId } = auth();
+    const user = await currentUser();
     const errorMessages = {
       title: "",
       description: "",
@@ -17,7 +17,7 @@ export async function createPost(_: any, formData: FormData) {
     };
     let newErrors = {} as typeof errorMessages;
 
-    if (!userId) {
+    if (!user) {
       throw new Error("User not authenticated.");
     }
 
@@ -50,7 +50,7 @@ export async function createPost(_: any, formData: FormData) {
 
     // Store image file in storage
     const imageExt = imageFile.type.split("/")[1];
-    const fileName = `${userId}_${uuidv4()}.${imageExt}`;
+    const fileName = `${user.id}_${uuidv4()}.${imageExt}`;
 
     const { data: storageFile, error } = await supabase.storage
       .from("next-blog-storage")
@@ -65,7 +65,7 @@ export async function createPost(_: any, formData: FormData) {
         title: formData.get("title") as string,
         description: formData.get("description") as string,
         content: formData.get("content") as string,
-        authorId: userId,
+        authorId: user.id,
         published: Boolean(formData.get("publish")),
         image: storageFile.path,
       },

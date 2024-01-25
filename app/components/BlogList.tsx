@@ -7,18 +7,20 @@ export default async function BlogList() {
   const posts = await getPosts();
 
   return (
-    <div className="grid py-5 grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+    <div>
       {posts.length > 0 ? (
-        posts.map((post) => (
-          <BlogCard
-            key={post.id}
-            title={post.title}
-            description={post.description}
-            author={post.authorId}
-          />
-        ))
+        <div className="grid py-5 grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+          {posts.map((post) => (
+            <BlogCard
+              key={post.id}
+              title={post.title}
+              description={post.description}
+              author={post.authorId}
+            />
+          ))}
+        </div>
       ) : (
-        <p>No posts available</p>
+        <p className="text-center">No posts available</p>
       )}
     </div>
   );

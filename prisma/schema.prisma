@@ -20,4 +20,6 @@ model Post {
   published   Boolean
   image       String
   authorId    String
+  authorName  String
+  authorImage String?
 }
