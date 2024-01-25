@@ -1,3 +1,4 @@
+import PostsTable from "@/components/PostsTable";
 import Link from "next/link";
 
 export default function MyPosts() {
@@ -12,6 +13,8 @@ export default function MyPosts() {
           Create Post
         </Link>
       </div>
+
+      <PostsTable />
     </div>
   );
 }
