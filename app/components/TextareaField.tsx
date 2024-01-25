@@ -6,6 +6,8 @@ export type TextareaField = {
   id: string;
   placeholder?: string;
   value?: string;
+  error?: string;
+  required?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
@@ -13,6 +15,7 @@ const TextareaField = ({
   label,
   value,
   id,
+  error,
   onChange,
   ...rest
 }: TextareaField) => {
@@ -36,6 +39,7 @@ const TextareaField = ({
         onChange={onChange}
         {...rest}
       />
+      {error && <span className="text-red-600">{error}</span>}
     </div>
   );
 };

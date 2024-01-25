@@ -10,6 +10,8 @@ export type InputField = {
   placeholder?: string;
   value?: string;
   accept?: string;
+  error?: string;
+  required?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -19,6 +21,7 @@ const InputField = ({
   id,
   type = "text",
   accept,
+  error,
   onChange,
   ...rest
 }: InputField) => {
@@ -44,6 +47,7 @@ const InputField = ({
         onChange={onChange}
         {...rest}
       />
+      {error && <span className="text-red-600">{error}</span>}
     </div>
   );
 };

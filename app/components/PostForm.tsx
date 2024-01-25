@@ -7,22 +7,33 @@ import TextareaField from "@/components/TextareaField";
 import { createPost } from "app/actions";
 import Image from "next/image";
 import React, { useState } from "react";
+import { useFormState } from "react-dom";
 
 type PostData = {
   title: string;
   description: string;
+  content: string;
   publish: boolean;
   image: File | null;
+};
+
+const initialState = {
+  title: "",
+  description: "",
+  content: "",
+  image: "",
 };
 
 const PostForm = () => {
   const [postData, setPostData] = useState<PostData>({
     title: "",
     description: "",
+    content: "",
     publish: false,
     image: null,
   });
   const [previewImage, setPreviewImage] = useState("");
+  const [state, formState] = useFormState(createPost, initialState);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
@@ -55,13 +66,15 @@ const PostForm = () => {
         </p>
       </div>
 
-      <form action={createPost} className="space-y-5">
+      <form action={formState} className="space-y-5">
         <InputField
           name="title"
           id="title"
           label="Title"
           placeholder="Your post title here..."
           value={postData.title}
+          error={state?.title}
+          required
           onChange={handleInputChange}
         />
         <InputField
@@ -70,12 +83,17 @@ const PostForm = () => {
           label="Description"
           placeholder="Your post description here..."
           value={postData.description}
+          error={state?.description}
+          required
           onChange={handleInputChange}
         />
         <TextareaField
           name="content"
           id="content"
           label="Content"
+          value={postData.content}
+          error={state?.content}
+          required
           placeholder="Your post content here..."
         />
         <InputField
@@ -84,6 +102,8 @@ const PostForm = () => {
           label="Image"
           type="file"
           accept="image/*"
+          error={state?.image}
+          required
           onChange={handleInputChange}
         />
 
