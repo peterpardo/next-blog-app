@@ -1,12 +1,10 @@
 import BlogCard from "@/components/BlogCard";
-import prisma from "@/utils/db";
+import { getPosts } from "@/utils/utils";
+
+export const revalidate = 3600;
 
 export default async function BlogList() {
-  const posts = await prisma.post.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const posts = await getPosts();
 
   return (
     <div className="grid py-5 grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
