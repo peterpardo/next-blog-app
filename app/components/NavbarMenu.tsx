@@ -1,35 +1,18 @@
 "use client";
 
 import { useClerk, useUser } from "@clerk/nextjs";
+import { useDropdownMenu } from "app/hooks/useDropdownMenu";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 export default function NavbarMenu() {
   const clerk = useClerk();
   const { isSignedIn, user, isLoaded } = useUser();
   const router = useRouter();
-  const [isClicked, setisClicked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        menuRef.current &&
-        isClicked &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
-        setisClicked(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef, isClicked]);
+  const { isClicked, setisClicked } = useDropdownMenu(menuRef);
 
   if (!isLoaded) return null;
 
