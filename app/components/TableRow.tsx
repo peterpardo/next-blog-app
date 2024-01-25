@@ -15,15 +15,21 @@ export default function TableRow({ post }: { post: Post }) {
   const formattedDate = dayjs(post.createdAt).format("MMM D, YYYY");
 
   return (
-    <tr key={post.id}>
-      <td>{post.id}</td>
-      <td>{post.title}</td>
-      <td>
-        <Image src={data.publicUrl} alt={post.title} width={200} height={200} loading="lazy"/>
+    <tr key={post.id} className="border-b">
+      <td className="px-2 py-1 w-20">{post.id}</td>
+      <td className="px-2 py-1">{post.title}</td>
+      <td className="px-2 py-1">
+        <Image
+          src={data.publicUrl}
+          alt={post.title}
+          width={200}
+          height={200}
+          loading="lazy"
+        />
       </td>
-      <td>{formattedDescription}</td>
-      <td>{formattedDate}</td>
-      <td>
+      <td className="px-2 py-1">{formattedDescription}</td>
+      <td className="px-2 py-1">{formattedDate}</td>
+      <td className="px-2 py-1">
         <button>Edit</button>
         <button>Delete</button>
       </td>

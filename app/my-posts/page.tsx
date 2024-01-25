@@ -1,7 +1,10 @@
 import PostsTable from "@/components/PostsTable";
+import { getPosts } from "@/utils/utils";
 import Link from "next/link";
 
-export default function MyPosts() {
+export default async function MyPosts() {
+  const posts = await getPosts();
+
   return (
     <div className="w-full space-y-5">
       <div className="w-full flex items-center justify-between">
@@ -14,7 +17,7 @@ export default function MyPosts() {
         </Link>
       </div>
 
-      <PostsTable />
+      <PostsTable posts={posts} />
     </div>
   );
 }
