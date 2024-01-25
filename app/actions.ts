@@ -66,6 +66,8 @@ export async function createPost(_: any, formData: FormData) {
         description: formData.get("description") as string,
         content: formData.get("content") as string,
         authorId: user.id,
+        authorName: `${user.firstName} ${user.lastName}`,
+        authorImage: user.hasImage ? user?.imageUrl : "",
         published: Boolean(formData.get("publish")),
         image: storageFile.path,
       },
