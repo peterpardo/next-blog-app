@@ -1,3 +1,4 @@
+import TableRowActionMenu from "@/components/TableRowActionMenu";
 import { supabase } from "@/utils/storage";
 import { Post } from "@prisma/client";
 import dayjs from "dayjs";
@@ -30,8 +31,7 @@ export default function TableRow({ post }: { post: Post }) {
       <td className="px-2 py-1">{formattedDescription}</td>
       <td className="px-2 py-1">{formattedDate}</td>
       <td className="px-2 py-1">
-        <button>Edit</button>
-        <button>Delete</button>
+        <TableRowActionMenu />
       </td>
     </tr>
   );

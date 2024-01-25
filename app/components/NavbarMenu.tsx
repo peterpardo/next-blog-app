@@ -12,7 +12,7 @@ export default function NavbarMenu() {
   const { isSignedIn, user, isLoaded } = useUser();
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
-  const { isClicked, setisClicked } = useDropdownMenu(menuRef);
+  const { isClicked, setIsClicked } = useDropdownMenu(menuRef);
 
   if (!isLoaded) return null;
 
@@ -34,7 +34,7 @@ export default function NavbarMenu() {
               width={40}
               height={40}
               className="rounded-full"
-              onClick={() => setisClicked((prevState) => !prevState)}
+              onClick={() => setIsClicked((prevState) => !prevState)}
             />
 
             {isClicked && (

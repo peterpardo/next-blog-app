@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const useDropdownMenu = (ref: any) => {
-  const [isClicked, setisClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -10,7 +10,7 @@ export const useDropdownMenu = (ref: any) => {
         isClicked &&
         !ref.current.contains(event.target as Node)
       ) {
-        setisClicked(false);
+        setIsClicked(false);
       }
     }
 
@@ -21,5 +21,5 @@ export const useDropdownMenu = (ref: any) => {
     };
   }, [ref, isClicked]);
 
-  return { isClicked, setisClicked };
+  return { isClicked, setIsClicked };
 };
