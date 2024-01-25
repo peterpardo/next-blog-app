@@ -13,9 +13,7 @@ export default async function BlogList() {
           {posts.map((post) => (
             <BlogCard
               key={post.id}
-              title={post.title}
-              description={post.description}
-              author={post.authorId}
+              post={post}
             />
           ))}
         </div>
