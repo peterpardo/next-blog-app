@@ -79,5 +79,5 @@ export async function createPost(_: any, formData: FormData) {
     return;
   }
 
-  redirect("/");
+  redirect("/my-posts");
 }
