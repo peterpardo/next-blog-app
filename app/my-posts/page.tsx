@@ -17,7 +17,7 @@ export default async function MyPosts() {
         </Link>
       </div>
 
-      <PostsTable posts={posts} />
+      <PostsTable data={posts} />
     </div>
   );
 }

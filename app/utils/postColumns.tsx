@@ -1,31 +1,31 @@
 import { Post } from "@prisma/client";
-import { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 
-export const postColumns: ColumnDef<Post>[] = [
-  {
+const columnHelper = createColumnHelper<Post>();
+
+export const postColumns = [
+  columnHelper.accessor("id", {
     header: "Post Id",
-    accessorKey: "id",
-  },
-  {
+    cell: (props) => <p>{props.getValue()}</p>,
+  }),
+  columnHelper.accessor("title", {
     header: "Title",
-    accessorKey: "title",
-  },
-  {
+    cell: (props) => <p>{props.getValue()}</p>,
+  }),
+  columnHelper.accessor("image", {
     header: "Image",
-    accessorKey: "image",
-  },
-  {
+    cell: (props) => <p>{props.getValue()}</p>,
+  }),
+  columnHelper.accessor("description", {
     header: "Description",
-    accessorKey: "description",
-  },
-  {
+    cell: (props) => <p>{props.getValue()}</p>,
+  }),
+  columnHelper.accessor("createdAt", {
     header: "Created At",
-    accessorKey: "createdAt",
-  },
-  {
-    id: "action",
-    cell: ({ row }) => {
-      return <button>edit {row.original.id}</button>;
-    },
-  },
+    cell: (props) => <p>{props.getValue().toString()}</p>,
+  }),
+  columnHelper.display({
+    id: "actions",
+    cell: (props) => <p>Action button</p>,
+  }),
 ];
