@@ -1,4 +1,5 @@
 import PostsTable from "@/components/PostsTable";
+import { postColumns } from "@/utils/postColumns";
 import { getPosts } from "@/utils/utils";
 import Link from "next/link";
 
@@ -17,7 +18,7 @@ export default async function MyPosts() {
         </Link>
       </div>
 
-      <PostsTable data={posts} />
+      <PostsTable data={posts} columns={postColumns} />
     </div>
   );
 }
