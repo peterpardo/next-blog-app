@@ -28,8 +28,6 @@ export default function PostsTable({
     },
   });
 
-  console.log(table.getState());
-
   return (
     <div className="w-full overflow-x-auto rounded-lg border border-b p-2">
       <table className="table-auto w-full min-w-[800px] min-h-[500px] border-collapse text-left">

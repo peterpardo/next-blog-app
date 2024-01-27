@@ -10,3 +10,19 @@ export const getPosts = cache(async () => {
 
   return posts;
 });
+
+export const getPost = async (id: string) => {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  return {
+    title: post?.title as string,
+    description: post?.description as string,
+    content: post?.content as string,
+    publish: post?.published as boolean,
+    image: post?.image as string,
+  };
+};

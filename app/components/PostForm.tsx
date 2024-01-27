@@ -6,19 +6,20 @@ import SubmitBtn from "@/components/SubmitBtn";
 import TextareaField from "@/components/TextareaField";
 import { createPost } from "app/actions";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
-
-type PostForm = {
-  action?: "CREATE" | "EDIT";
-};
 
 type PostData = {
   title: string;
   description: string;
   content: string;
   publish: boolean;
-  image: File | null;
+  image: File | null | string;
+};
+
+type PostForm = {
+  action?: "CREATE" | "EDIT";
+  post?: PostData;
 };
 
 const initialState = {
@@ -28,7 +29,7 @@ const initialState = {
   image: "",
 };
 
-const PostForm = ({ action = "CREATE" }: PostForm) => {
+const PostForm = ({ action = "CREATE", post }: PostForm) => {
   const [postData, setPostData] = useState<PostData>({
     title: "",
     description: "",
@@ -38,12 +39,25 @@ const PostForm = ({ action = "CREATE" }: PostForm) => {
   });
   const [previewImage, setPreviewImage] = useState("");
   const [state, formState] = useFormState(createPost, initialState);
+  const editedPost = useMemo(() => post, [post]);
 
   const isCreateAction = action === "CREATE";
   const formTitle = isCreateAction ? "Create Post" : "Edit Post";
   const formDesc = isCreateAction
     ? "Here, you can create your own post. Add an image to attract people to your post!"
     : "Here is your own post. You can make revisions to your post.";
+
+  useEffect(() => {
+    if (action !== "EDIT" || !editedPost) return;
+
+    setPostData(editedPost);
+
+    if (editedPost?.image) {
+      setPreviewImage(
+        `${process.env.NEXT_PUBLIC_BUCKET_URL}/${editedPost.image}`
+      );
+    }
+  }, [action, editedPost]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
