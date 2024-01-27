@@ -39,14 +39,24 @@ export const postColumns = [
       );
     },
   }),
-  columnHelper.accessor("description", {
-    header: "Description",
+  columnHelper.accessor("published", {
+    header: "Published",
     cell: (props) => {
-      const desc = props.getValue();
-      const formattedDescription =
-        desc.length > 30 ? `${desc.slice(0, 30)}...` : desc;
+      const published = props.getValue();
 
-      return formattedDescription;
+      if (published) {
+        return (
+          <span className="bg-green-600 px-2 py-1 rounded-lg text-sm text-white">
+            published
+          </span>
+        );
+      } else {
+        return (
+          <span className="bg-slate-200 px-2 py-1 rounded-lg text-sm text-slate-600">
+            not published
+          </span>
+        );
+      }
     },
   }),
   columnHelper.accessor("createdAt", {
