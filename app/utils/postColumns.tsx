@@ -5,6 +5,7 @@ import { Post } from "@prisma/client";
 import { createColumnHelper } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import Image from "next/image";
+import Link from "next/link";
 
 const columnHelper = createColumnHelper<Post>();
 
@@ -69,14 +70,16 @@ export const postColumns = [
   columnHelper.display({
     id: "actions",
     cell: (props) => {
+      const id = props.row.original.id;
+
       return (
         <div className="flex items-center gap-x-2">
-          <button
-            onClick={() => console.log("Edit: ", props.row.original.id)}
+          <Link
+            href={`/my-posts/${id}/edit`}
             className="px-2 py-1 rounded-lg text-xs bg-slate-100 text-gray-600 hover:bg-slate-50"
           >
             edit
-          </button>
+          </Link>
           <button
             onClick={() => console.log("Delete: ", props.row.original.id)}
             className="px-2 py-1 rounded-lg text-xs bg-slate-100 text-gray-600 hover:bg-slate-50"

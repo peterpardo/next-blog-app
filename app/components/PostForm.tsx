@@ -9,6 +9,10 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 
+type PostForm = {
+  action?: "CREATE" | "EDIT";
+};
+
 type PostData = {
   title: string;
   description: string;
@@ -24,7 +28,7 @@ const initialState = {
   image: "",
 };
 
-const PostForm = () => {
+const PostForm = ({ action = "CREATE" }: PostForm) => {
   const [postData, setPostData] = useState<PostData>({
     title: "",
     description: "",
@@ -34,6 +38,12 @@ const PostForm = () => {
   });
   const [previewImage, setPreviewImage] = useState("");
   const [state, formState] = useFormState(createPost, initialState);
+
+  const isCreateAction = action === "CREATE";
+  const formTitle = isCreateAction ? "Create Post" : "Edit Post";
+  const formDesc = isCreateAction
+    ? "Here, you can create your own post. Add an image to attract people to your post!"
+    : "Here is your own post. You can make revisions to your post.";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
@@ -59,11 +69,8 @@ const PostForm = () => {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl">Create Post</h1>
-        <p className="text-gray-500">
-          Here, you can create your own post. Add an image to attract people to
-          your post!
-        </p>
+        <h1 className="text-2xl">{formTitle}</h1>
+        <p className="text-gray-500">{formDesc}</p>
       </div>
 
       <form action={formState} className="space-y-5">
