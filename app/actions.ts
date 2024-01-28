@@ -5,6 +5,7 @@ import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
 import { supabase } from "@/utils/storage";
 import { v4 as uuidv4 } from "uuid";
+import { User } from "@clerk/nextjs/server";
 
 type ErrorMessages = {
   title: string;
@@ -13,20 +14,17 @@ type ErrorMessages = {
   image: string;
 };
 
+const _errorMessages = {
+  title: "",
+  description: "",
+  content: "",
+  image: "",
+};
+
 export async function createPost(_: any, formData: FormData) {
   try {
-    const user = await currentUser();
-    const errorMessages = {
-      title: "",
-      description: "",
-      content: "",
-      image: "",
-    };
-
-    if (!user) {
-      throw new Error("User not authenticated.");
-    }
-
+    const user = await getCurrentUser();
+    const errorMessages = { ..._errorMessages };
     let newErrors = validatePost(formData);
 
     if (Object.keys(newErrors).length > 0) {
@@ -61,6 +59,21 @@ export async function createPost(_: any, formData: FormData) {
   }
 
   redirect("/my-posts");
+}
+
+async function getCurrentUser(): Promise<User> {
+  try {
+    const user = await currentUser();
+
+    if (!user) {
+      throw new Error("User not authenticated.");
+    }
+
+    return user;
+  } catch (e) {
+    console.log("Error: User not authenticated.");
+    throw new Error("User not authenticated.");
+  }
 }
 
 function validatePost(formData: FormData) {
