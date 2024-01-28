@@ -40,18 +40,6 @@ export async function createPost(_: any, formData: FormData) {
       formData.get("image") as File,
       user.id
     );
-    // Store image file in storage
-    // const imageFile = formData.get("image") as File;
-    // const imageExt = imageFile.type.split("/")[1];
-    // const fileName = `${user.id}_${uuidv4()}.${imageExt}`;
-
-    // const { data: storageFile, error } = await supabase.storage
-    //   .from("next-blog-storage")
-    //   .upload(fileName, imageFile);
-
-    // if (error) {
-    //   throw new Error("Error occurred. Try again.");
-    // }
 
     const post = await prisma.post.create({
       data: {
@@ -96,8 +84,11 @@ function validatePost(formData: FormData) {
     newErrors.image = "Image is required";
   } else if (fileSize > 5) {
     newErrors.image = "Image file must be less than 5mb";
+  } else if (
+    !["image/png", "image/jpeg", "image/jpg"].includes(imageFile.type)
+  ) {
+    newErrors.image = "File must be an image";
   }
-
   return newErrors;
 }
 
