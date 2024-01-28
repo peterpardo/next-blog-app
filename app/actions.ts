@@ -146,10 +146,14 @@ function validatePost(formData: FormData, isCreatePost = true) {
 
   if (formData.get("title") === "") {
     newErrors.title = "Title is required";
+  } else if ((formData.get("title") as string).length > 80) {
+    newErrors.title = "Title must not exceed 80 characters.";
   }
 
   if (formData.get("description") === "") {
     newErrors.description = "Description is required";
+  } else if ((formData.get("description") as string).length > 100) {
+    newErrors.description = "Description must not exceed 100 characters.";
   }
 
   if (formData.get("content") === "") {
