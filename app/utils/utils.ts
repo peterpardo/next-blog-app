@@ -19,6 +19,7 @@ export const getPost = async (id: string) => {
   });
 
   return {
+    id: post?.id,
     title: post?.title as string,
     description: post?.description as string,
     content: post?.content as string,

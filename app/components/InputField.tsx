@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 
 export type InputField = {
-  label: string;
+  label?: string;
   name: string;
   id: string;
   type?: string;
@@ -33,11 +33,15 @@ const InputField = ({
     }
   }, [value]);
 
-  return (
+  return type === "hidden" ? (
+    <input ref={inputRef} id={id} type={type} {...rest} />
+  ) : (
     <div className="w-full space-y-2">
-      <label htmlFor={id} className="block">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={id} className="block">
+          {label}
+        </label>
+      )}
       <input
         ref={inputRef}
         className="rounded border w-full"

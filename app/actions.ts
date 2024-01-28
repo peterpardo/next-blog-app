@@ -61,6 +61,26 @@ export async function createPost(_: any, formData: FormData) {
   redirect("/my-posts");
 }
 
+export async function editPost(_: any, formData: FormData) {
+  try {
+    const user = await getCurrentUser();
+    const errorMessages = { ..._errorMessages };
+    let newErrors = validatePost(formData);
+
+    if (Object.keys(newErrors).length > 0) {
+      return {
+        ...errorMessages,
+        ...newErrors,
+      };
+    }
+
+    console.log("editPost:", formData);
+  } catch (e) {
+    console.log("editPost:", e);
+    throw new Error("editPost error");
+  }
+}
+
 async function getCurrentUser(): Promise<User> {
   try {
     const user = await currentUser();

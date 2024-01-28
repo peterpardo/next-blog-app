@@ -4,12 +4,13 @@ import CheckboxField from "@/components/CheckboxField";
 import InputField from "@/components/InputField";
 import SubmitBtn from "@/components/SubmitBtn";
 import TextareaField from "@/components/TextareaField";
-import { createPost } from "app/actions";
+import { createPost, editPost } from "app/actions";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
 
 type PostData = {
+  id?: number | string;
   title: string;
   description: string;
   content: string;
@@ -38,7 +39,8 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
     image: null,
   });
   const [previewImage, setPreviewImage] = useState("");
-  const [state, formState] = useFormState(createPost, initialState);
+  const [createState, createFormState] = useFormState(createPost, initialState);
+  const [editState, editFormState] = useFormState(editPost, initialState);
   const editedPost = useMemo(() => post, [post]);
 
   const isCreateAction = action === "CREATE";
@@ -87,14 +89,25 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
         <p className="text-gray-500">{formDesc}</p>
       </div>
 
-      <form action={formState} className="space-y-5">
+      <form
+        action={isCreateAction ? createFormState : editFormState}
+        className="space-y-5"
+      >
+        {!isCreateAction && editedPost?.id && (
+          <InputField
+            name="postId"
+            id="postId"
+            value={editedPost?.id.toString()}
+            type="hidden"
+          />
+        )}
         <InputField
           name="title"
           id="title"
           label="Title"
           placeholder="Your post title here..."
           value={postData.title}
-          error={state?.title}
+          error={isCreateAction ? createState?.title : editState?.title}
           required
           onChange={handleInputChange}
         />
@@ -104,7 +117,9 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
           label="Description"
           placeholder="Your post description here..."
           value={postData.description}
-          error={state?.description}
+          error={
+            isCreateAction ? createState?.description : editState?.description
+          }
           required
           onChange={handleInputChange}
         />
@@ -113,7 +128,7 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
           id="content"
           label="Content"
           value={postData.content}
-          error={state?.content}
+          error={isCreateAction ? createState?.content : editState?.content}
           required
           placeholder="Your post content here..."
         />
@@ -123,7 +138,7 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
           label="Image"
           type="file"
           accept="image/*"
-          error={state?.image}
+          error={isCreateAction ? createState?.image : editState?.image}
           required
           onChange={handleInputChange}
         />
