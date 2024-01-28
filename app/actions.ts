@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
 import { supabase } from "@/utils/storage";
@@ -65,7 +65,7 @@ export async function editPost(_: any, formData: FormData) {
   try {
     const user = await getCurrentUser();
     const errorMessages = { ..._errorMessages };
-    let newErrors = validatePost(formData);
+    let newErrors = validatePost(formData, false);
 
     if (Object.keys(newErrors).length > 0) {
       return {
@@ -74,11 +74,56 @@ export async function editPost(_: any, formData: FormData) {
       };
     }
 
-    console.log("editPost:", formData);
+    if (formData.get("postId") === null) {
+      throw new Error("Post id does not exists.");
+    }
+
+    const postId = formData.get("postId") as string;
+    const oldPost = await prisma.post.findUnique({
+      where: {
+        id: parseInt(postId),
+      },
+    });
+
+    if (!oldPost) throw new Error("Post does not exists");
+
+    const imageFile = formData.get("image") as File;
+    let newImageFile: { path: string } | null = null;
+    if (imageFile.size > 0) {
+      const { error } = await supabase.storage
+        .from("next-blog-storage")
+        .remove([oldPost.image]);
+
+      if (error) {
+        throw new Error("Error in replacing post image. Try again.");
+      }
+
+      newImageFile = await storePostImage(imageFile, user.id);
+    }
+
+    const editedPost = await prisma.post.update({
+      where: {
+        id: parseInt(postId),
+      },
+      data: {
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        content: formData.get("content") as string,
+        authorId: user.id,
+        authorName: `${user.firstName} ${user.lastName}`,
+        authorImage: user.hasImage ? user?.imageUrl : "",
+        published: Boolean(formData.get("publish")),
+        image: newImageFile !== null ? newImageFile.path : oldPost.image,
+      },
+    });
+
+    console.log("editedPost:", editedPost);
   } catch (e) {
     console.log("editPost:", e);
     throw new Error("editPost error");
   }
+
+  redirect("/my-posts");
 }
 
 async function getCurrentUser(): Promise<User> {
@@ -96,7 +141,7 @@ async function getCurrentUser(): Promise<User> {
   }
 }
 
-function validatePost(formData: FormData) {
+function validatePost(formData: FormData, isCreatePost = true) {
   let newErrors = {} as ErrorMessages;
 
   if (formData.get("title") === "") {
@@ -113,15 +158,23 @@ function validatePost(formData: FormData) {
 
   const imageFile = formData.get("image") as File;
   const fileSize = imageFile.size / 1024 ** 2; // convert file size to MB
-  if (imageFile.size === 0) {
-    newErrors.image = "Image is required";
-  } else if (fileSize > 5) {
-    newErrors.image = "Image file must be less than 5mb";
-  } else if (
-    !["image/png", "image/jpeg", "image/jpg"].includes(imageFile.type)
-  ) {
-    newErrors.image = "File must be an image";
+
+  if (isCreatePost) {
+    if (imageFile.size === 0) {
+      newErrors.image = "Image is required";
+    }
   }
+
+  if (imageFile.size > 0) {
+    if (fileSize > 5) {
+      newErrors.image = "Image file must be less than 5mb";
+    } else if (
+      !["image/png", "image/jpeg", "image/jpg"].includes(imageFile.type)
+    ) {
+      newErrors.image = "File must be an image";
+    }
+  }
+
   return newErrors;
 }
 

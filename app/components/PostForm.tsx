@@ -56,7 +56,7 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
 
     if (editedPost?.image) {
       setPreviewImage(
-        `${process.env.NEXT_PUBLIC_BUCKET_URL}/${editedPost.image}`
+        `${process.env.NEXT_PUBLIC_BUCKET_URL}/${editedPost?.image}`
       );
     }
   }, [action, editedPost]);
@@ -139,7 +139,7 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
           type="file"
           accept="image/*"
           error={isCreateAction ? createState?.image : editState?.image}
-          required
+          required={isCreateAction}
           onChange={handleInputChange}
         />
 
@@ -166,7 +166,7 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
         </div>
 
         <div className="flex items-center justify-end">
-          <SubmitBtn label="Create Post" />
+          <SubmitBtn label={isCreateAction ? "Create Post" : "Edit Post"} />
         </div>
       </form>
     </div>

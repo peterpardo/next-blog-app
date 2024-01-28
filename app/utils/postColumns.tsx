@@ -31,10 +31,11 @@ export const postColumns = [
 
       return (
         <Image
-          src={data.publicUrl}
+          src={data?.publicUrl}
           alt={props.row.original.title}
-          width={200}
-          height={200}
+          width={130}
+          height={130}
+          className="w-auto"
           loading="lazy"
         />
       );
