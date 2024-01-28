@@ -19,7 +19,7 @@ export const postColumns = [
   columnHelper.accessor("title", {
     header: "Title",
     cell: (props) => {
-      return <div className="max-w-72">{props.getValue()}</div>;
+      return <div className="w-48">{props.getValue()}</div>;
     },
   }),
   columnHelper.accessor("image", {
