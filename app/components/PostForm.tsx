@@ -128,6 +128,8 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
           required
           onChange={handleInputChange}
         />
+        {/* Textarea need for form validation */}
+        <TextareaField name="content" type="hidden" value={postData?.content} />
         <Tiptap data={post?.content as string} onChange={handleContentChange} />
         <InputField
           name="image"

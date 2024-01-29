@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from "react";
 
 export type TextareaField = {
-  label: string;
+  label?: string;
   name: string;
-  id: string;
+  id?: string;
   placeholder?: string;
   value?: string;
   error?: string;
   required?: boolean;
+  type?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
@@ -16,6 +17,7 @@ const TextareaField = ({
   value,
   id,
   error,
+  type,
   onChange,
   ...rest
 }: TextareaField) => {
@@ -27,7 +29,9 @@ const TextareaField = ({
     }
   }, [value]);
 
-  return (
+  return type === "hidden" ? (
+    <textarea ref={textareaRef} hidden {...rest} />
+  ) : (
     <div className="w-full space-y-2">
       <label htmlFor={id} className="block">
         {label}

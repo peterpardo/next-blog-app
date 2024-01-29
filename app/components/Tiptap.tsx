@@ -1,7 +1,6 @@
 "use client";
 
 import Toolbar from "@/components/Toolbar";
-import BulletList from "@tiptap/extension-bullet-list";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
