@@ -128,15 +128,6 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
           required
           onChange={handleInputChange}
         />
-        <TextareaField
-          name="content"
-          id="content"
-          label="Content"
-          value={postData.content}
-          error={isCreateAction ? createState?.content : editState?.content}
-          required
-          placeholder="Your post content here..."
-        />
         <Tiptap data={post?.content as string} onChange={handleContentChange} />
         <InputField
           name="image"
