@@ -14,7 +14,7 @@ export default async function Post({ params }: { params: { id: string } }) {
 
   return (
     <div className="max-w-[700px] mx-auto space-y-5">
-      <h1 className="text-5xl font-bold">{post?.title}</h1>
+      <h1 className="text-3xl font-bold md:text-5xl">{post?.title}</h1>
       <div className="flex items-center gap-x-5">
         <Image
           src={post?.authorImage as string}
