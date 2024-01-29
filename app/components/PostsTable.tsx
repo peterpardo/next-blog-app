@@ -8,6 +8,7 @@ import {
   useReactTable,
   RowData,
 } from "@tanstack/react-table";
+import { deletePost } from "app/actions";
 
 declare module "@tanstack/react-table" {
   interface TableMeta<TData extends RowData> {
@@ -35,11 +36,10 @@ export default function PostsTable({
     },
 
     meta: {
-      deletePost: (postId: number) => {
-        if (confirm("Are you sure you want to delet this post?")) {
-          console.log("delete");
-        } else {
-          console.log("cancelled");
+      deletePost: async (postId: number) => {
+        if (confirm("Are you sure you want to delete this post?")) {
+          await deletePost(postId);
+          alert("Post deleted.");
         }
       },
     },

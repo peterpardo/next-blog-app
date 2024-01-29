@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { supabase } from "@/utils/storage";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 type ErrorMessages = {
   title: string;
@@ -90,13 +91,7 @@ export async function editPost(_: any, formData: FormData) {
     const imageFile = formData.get("image") as File;
     let newImageFile: { path: string } | null = null;
     if (imageFile.size > 0) {
-      const { error } = await supabase.storage
-        .from("next-blog-storage")
-        .remove([oldPost.image]);
-
-      if (error) {
-        throw new Error("Error in replacing post image. Try again.");
-      }
+      await deletePostImage(oldPost.image);
 
       newImageFile = await storePostImage(imageFile, user.id);
     }
@@ -124,6 +119,34 @@ export async function editPost(_: any, formData: FormData) {
   }
 
   redirect("/my-posts");
+}
+
+export async function deletePost(postId: number) {
+  try {
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+
+    if (!post) {
+      throw new Error("Post does not exits.");
+    }
+
+    await deletePostImage(post.image);
+
+    const deletedPost = await prisma.post.delete({
+      where: {
+        id: postId,
+      },
+    });
+
+    console.log("deletePost:", deletedPost);
+  } catch (e) {
+    throw new Error("Error in deleting post.");
+  }
+
+  revalidatePath("/my-posts");
 }
 
 async function getCurrentUser(): Promise<User> {
@@ -201,5 +224,21 @@ async function storePostImage(
     return storageFile;
   } catch (e) {
     throw new Error("Error occurred on image upload");
+  }
+}
+
+async function deletePostImage(fileName: string) {
+  try {
+    const { data, error } = await supabase.storage
+      .from("next-blog-storage")
+      .remove([fileName]);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw new Error("Error in deleting image");
   }
 }
