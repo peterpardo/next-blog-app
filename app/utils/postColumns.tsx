@@ -82,7 +82,7 @@ export const postColumns = [
             edit
           </Link>
           <button
-            onClick={() => console.log("Delete: ", props.row.original.id)}
+            onClick={() => props.table.options.meta?.deletePost(id)}
             className="px-2 py-1 rounded-lg text-xs bg-slate-100 text-gray-600 hover:bg-slate-50"
           >
             delete

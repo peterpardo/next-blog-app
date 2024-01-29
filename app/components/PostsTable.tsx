@@ -6,7 +6,14 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
+  RowData,
 } from "@tanstack/react-table";
+
+declare module "@tanstack/react-table" {
+  interface TableMeta<TData extends RowData> {
+    deletePost: (postId: number) => void;
+  }
+}
 
 export default function PostsTable({
   data,
@@ -24,6 +31,16 @@ export default function PostsTable({
     initialState: {
       pagination: {
         pageSize: 3,
+      },
+    },
+
+    meta: {
+      deletePost: (postId: number) => {
+        if (confirm("Are you sure you want to delet this post?")) {
+          console.log("delete");
+        } else {
+          console.log("cancelled");
+        }
       },
     },
   });
