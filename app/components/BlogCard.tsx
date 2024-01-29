@@ -26,15 +26,17 @@ export default function BlogCard({ post }: { post: Post }) {
 
   return (
     <div className="max-w-96 max-h-[400px] mx-auto rounded-lg shadow-lg">
-      <Link href="/">
-        <Image
-          src={data?.publicUrl}
-          alt={post.title}
-          width={500}
-          height={500}
-          className="rounded-t-lg"
-        />
-      </Link>
+      <div className="overflow-hidden">
+        <Link href="/">
+          <Image
+            src={data?.publicUrl}
+            alt={post.title}
+            width={500}
+            height={500}
+            className="rounded-t-lg transition ease-in-out delay-75 hover:scale-110"
+          />
+        </Link>
+      </div>
       <div className="p-4">
         <h1 className="font-bold text-lg">{formattedTitle}</h1>
         <p className="text-sm text-gray-500">
