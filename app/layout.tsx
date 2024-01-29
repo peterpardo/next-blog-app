@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={`${inter.className} h-screen flex flex-col`}>
           <Navbar />
           <main className="max-w-[1400px] mx-auto py-8 px-4">{children}</main>
           <Footer />

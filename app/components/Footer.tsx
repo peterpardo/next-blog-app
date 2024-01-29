@@ -5,7 +5,7 @@ export default function Footer() {
   let year = d.getFullYear();
 
   return (
-    <div className="grid place-content-center border-t-2 h-40 w-full mt-5">
+    <div className="grid place-content-center min-h-20 border-t-2 w-full mt-auto md:min-h-40">
       <div>
         &copy; {year}{" "}
         <span className="text-green-600">
