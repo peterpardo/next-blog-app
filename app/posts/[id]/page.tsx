@@ -1,3 +1,4 @@
+import PostContent from "@/components/PostContent";
 import { supabase } from "@/utils/storage";
 import { getPost } from "@/utils/utils";
 import { Post } from "@prisma/client";
@@ -36,7 +37,7 @@ export default async function Post({ params }: { params: { id: string } }) {
           height={700}
           className="w-auto"
         />
-        <p>{post.content}</p>
+        <PostContent content={post.content} />
       </div>
     </div>
   );

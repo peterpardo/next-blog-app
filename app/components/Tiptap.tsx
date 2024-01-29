@@ -24,7 +24,7 @@ const Tiptap = ({ data, onChange }: TiptapProps) => {
     editorProps: {
       attributes: {
         class:
-          "mx-auto prose border border-black rounded focus:outline-blue-500 px-4 py-2",
+          "max-w-full prose border border-black rounded focus:outline-blue-500 px-4 py-2",
       },
     },
     onUpdate: (props) => {
