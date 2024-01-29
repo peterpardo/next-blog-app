@@ -1,10 +1,10 @@
 import PostsTable from "@/components/PostsTable";
 import { postColumns } from "@/utils/postColumns";
-import { getPosts } from "@/utils/utils";
+import { getUserPosts } from "@/utils/utils";
 import Link from "next/link";
 
 export default async function MyPosts() {
-  const posts = await getPosts();
+  const posts = await getUserPosts();
 
   return (
     <div className="w-full space-y-5">

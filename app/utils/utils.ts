@@ -1,16 +1,34 @@
 import { cache } from "react";
 import prisma from "@/utils/db";
 import { Post } from "@prisma/client";
+import { currentUser } from "@clerk/nextjs";
 
-export const getPosts = cache(async () => {
+export const getUserPosts = async () => {
+  const user = await currentUser();
   const posts = await prisma.post.findMany({
+    where: {
+      authorId: user?.id,
+    },
     orderBy: {
       createdAt: "desc",
     },
   });
 
   return posts;
-});
+};
+
+export const getPublishedPosts = async () => {
+  const posts = await prisma.post.findMany({
+    where: {
+      published: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return posts;
+};
 
 export const getPost = async (
   id: string,
