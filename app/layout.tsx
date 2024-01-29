@@ -21,10 +21,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <main className="max-w-[1400px] mx-auto px-4 pb-4">
-            <Navbar />
-            {children}
-          </main>
+          <Navbar />
+          <main className="max-w-[1400px] mx-auto py-8 px-4">{children}</main>
           <Footer />
         </body>
       </html>

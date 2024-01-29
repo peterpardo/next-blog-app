@@ -39,9 +39,6 @@ export default function NavbarMenu() {
 
             {isClicked && (
               <div className="absolute w-40 top-[110%] right-0 bg-white shadow-lg">
-                <div className="text-sm px-3 cursor-pointer py-1 hover:bg-gray-100">
-                  Settings
-                </div>
                 <div
                   onClick={() => clerk.signOut(() => router.push("/"))}
                   className="text-sm px-3 cursor-pointer py-1 hover:bg-gray-100"
