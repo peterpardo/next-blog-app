@@ -16,7 +16,10 @@ export default function BlogCard({ post }: { post: Post }) {
     post.description.length > 30 ? (
       <>
         {post.description.slice(0, 30)}...{" "}
-        <Link href="/" className="text-blue-600 hover:text-blue-500">
+        <Link
+          href={`/posts/${post.id}`}
+          className="text-blue-600 hover:text-blue-500"
+        >
           read more
         </Link>
       </>
@@ -27,7 +30,7 @@ export default function BlogCard({ post }: { post: Post }) {
   return (
     <div className="max-w-96 max-h-[400px] mx-auto rounded-lg shadow-lg">
       <div className="overflow-hidden">
-        <Link href="/">
+        <Link href={`/posts/${post.id}`}>
           <Image
             src={data?.publicUrl}
             alt={post.title}
