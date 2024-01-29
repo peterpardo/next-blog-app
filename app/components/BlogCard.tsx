@@ -28,7 +28,7 @@ export default function BlogCard({ post }: { post: Post }) {
     <div className="max-w-96 max-h-[400px] mx-auto rounded-lg shadow-lg">
       <Link href="/">
         <Image
-          src={data.publicUrl}
+          src={data?.publicUrl}
           alt={post.title}
           width={500}
           height={500}
