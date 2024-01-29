@@ -1,4 +1,3 @@
-import { cache } from "react";
 import prisma from "@/utils/db";
 import { Post } from "@prisma/client";
 import { currentUser } from "@clerk/nextjs";

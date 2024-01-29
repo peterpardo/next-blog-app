@@ -4,6 +4,7 @@ import CheckboxField from "@/components/CheckboxField";
 import InputField from "@/components/InputField";
 import SubmitBtn from "@/components/SubmitBtn";
 import TextareaField from "@/components/TextareaField";
+import Tiptap from "@/components/Tiptap";
 import { createPost, editPost } from "app/actions";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
@@ -82,6 +83,10 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
     }));
   };
 
+  const handleContentChange = (newContent: string) => {
+    setPostData((prevState) => ({ ...prevState, content: newContent }));
+  };
+
   return (
     <div className="space-y-5">
       <div>
@@ -132,6 +137,7 @@ const PostForm = ({ action = "CREATE", post }: PostForm) => {
           required
           placeholder="Your post content here..."
         />
+        <Tiptap data={post?.content as string} onChange={handleContentChange} />
         <InputField
           name="image"
           id="image"
