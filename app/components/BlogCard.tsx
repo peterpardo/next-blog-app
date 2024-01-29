@@ -28,15 +28,15 @@ export default function BlogCard({ post }: { post: Post }) {
     );
 
   return (
-    <div className="max-w-96 max-h-[400px] mx-auto rounded-lg shadow-lg">
-      <div className="overflow-hidden">
+    <div className="max-w-96 max-h-[450px] mx-auto rounded-lg shadow-lg">
+      <div className="overflow-hidden rounded-t-lg">
         <Link href={`/posts/${post.id}`}>
           <Image
             src={data?.publicUrl}
             alt={post.title}
             width={500}
             height={500}
-            className="rounded-t-lg transition ease-in-out delay-75 hover:scale-110"
+            className="w-full h-[250px] object-cover transition ease-in-out delay-75 hover:scale-110"
           />
         </Link>
       </div>
