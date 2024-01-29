@@ -9,15 +9,7 @@ import { createPost, editPost } from "app/actions";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
-
-type PostData = {
-  id?: number | string;
-  title: string;
-  description: string;
-  content: string;
-  publish: boolean;
-  image: File | null | string;
-};
+import { PostData } from "types";
 
 type PostForm = {
   action?: "CREATE" | "EDIT";

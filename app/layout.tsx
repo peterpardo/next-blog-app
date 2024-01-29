@@ -22,7 +22,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${inter.className} h-screen flex flex-col`}>
           <Navbar />
-          <main className="w-full max-w-[1400px] mx-auto py-8 px-4">
+          <main className="w-full max-w-[1400px] mx-auto pt-28 pb-8 px-4 mt">
             {children}
           </main>
           <Footer />
